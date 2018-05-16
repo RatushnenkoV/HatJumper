@@ -14,6 +14,9 @@ namespace hatjumper
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GameScene activeScene;
+        float ratio;
+        Vector2 screenSize, baseScreenSize = new Vector2(1080, 1920);
+
 
         public HJGame()
         {
@@ -24,9 +27,12 @@ namespace hatjumper
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
             graphics.SupportedOrientations = DisplayOrientation.Portrait;
+
+            screenSize = new Vector2(graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
+            ratio = Average(screenSize.X / baseScreenSize.X, screenSize.Y / baseScreenSize.Y);
         }
 
-        
+        float Average(float _value1, float _value2) => (_value1 + _value2) / 2;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -48,7 +54,7 @@ namespace hatjumper
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            activeScene = new Menu(this, new Vector2(graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height));
+            activeScene = new Menu(this, screenSize);
             activeScene.Load();
         }
 
