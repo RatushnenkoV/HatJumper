@@ -13,16 +13,7 @@ namespace hatjumper
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D background;
-        Texture2D PlayBtnTexture => menu.buttons[0].Image;
-        Texture2D ShopBtnTexture => menu.buttons[1].Image;
-        Texture2D SoundBtnTexture => menu.buttons[2].Image;
-        Texture2D VibrBtnTexture => menu.buttons[3].Image;
-        SpriteFont testFont;
-        MainMenu menu;
-        public string testText = "test";
-        List<Texture2D> btnTextures = new List<Texture2D>(4);
-        List<Vector2> btnCoordinates = new List<Vector2>(4);
+        GameScene activeScene;
 
         public HJGame()
         {
@@ -57,33 +48,8 @@ namespace hatjumper
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            testFont = Content.Load<SpriteFont>("gameFont");
-
-            btnTextures.Add(Content.Load<Texture2D>("Play"));
-            btnTextures.Add(Content.Load<Texture2D>("Shop"));
-            btnTextures.Add(Content.Load<Texture2D>("SoundOn"));
-            btnTextures.Add(Content.Load<Texture2D>("VibrOn"));
-
-            background = Content.Load<Texture2D>("Background");
-            
-            Viewport viewport = graphics.GraphicsDevice.Viewport;
-            float viewportWidth = viewport.Width;
-            float viewportHeight = viewport.Height;
-            float toBorderX = 75, toBorderY = 75;
-            float playBtnYPos = 600;
-            // Play button position
-            btnCoordinates.Add(new Vector2(viewportWidth - toBorderX - PlayBtnTexture.Width, playBtnYPos));
-            // Shop button position
-            btnCoordinates.Add(new Vector2(viewportWidth - toBorderX - ShopBtnTexture.Width, playBtnYPos + 150));
-            // Sound button position
-            btnCoordinates.Add(new Vector2(toBorderX, viewportHeight - toBorderY - SoundBtnTexture.Height));
-            // Vibration button position
-            btnCoordinates.Add(new Vector2(toBorderX*2 + SoundBtnTexture.Width,
-                                           viewportHeight - toBorderY - VibrBtnTexture.Height));
-            
-            menu = new MainMenu(btnCoordinates, btnTextures);
-            // TODO: use this.Content to load your game content here
+            activeScene = new Menu(this, new Vector2(graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height));
+            activeScene.Load();
         }
 
         /// <summary>
@@ -107,11 +73,12 @@ namespace hatjumper
             {
                 if (touch.State != TouchLocationState.Released)
                     continue;
-                menu.CheckTap(touch, ref testText);
+                activeScene.Tap(touch.Position);
             }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Exit();
 
+            activeScene.Update(gameTime);
             // TODO: Add your update logic here
             
             base.Update(gameTime);
@@ -123,19 +90,14 @@ namespace hatjumper
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(0, 0, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height), Color.White);
-            foreach (var butt in menu.buttons)
-            {
-                spriteBatch.Draw(butt.Image, btnCoordinates[menu.buttons.IndexOf(butt)], Color.White);
-            }
-            spriteBatch.DrawString(testFont, testText, Vector2.Zero, Color.Black);
-            spriteBatch.End();
-            // TODO: Add your drawing code here
-
+            activeScene.Draw(graphics, spriteBatch, gameTime);
             base.Draw(gameTime);
+        }
+
+        public void SetActiveScene(GameScene gameScene)
+        {
+            gameScene.Load();
+            activeScene = gameScene;
         }
     }
 }
