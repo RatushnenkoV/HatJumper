@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace hatjumper
 {
-    class GameObject
+    public class GameObject
     {
         public Vector2 position, scales;
         public Rectangle displayRectangle => new Rectangle((int)position.X, (int)position.Y, (int)scales.X, (int)scales.Y);

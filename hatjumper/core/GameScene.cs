@@ -6,14 +6,17 @@ using Microsoft.Xna.Framework.Input.Touch;
 
 namespace hatjumper
 {
-    class GameScene
+    public class GameScene
     {
         public List<GameObject> gameObjects = new List<GameObject>();
         public Game game;
 
-        public GameScene(Game game)
+        public Vector2 screenScales;
+
+        public GameScene(Game game, Vector2 screenScales)
         {
             this.game = game;
+            this.screenScales = screenScales;
         }
 
         public void Update(GameTime gameTime)

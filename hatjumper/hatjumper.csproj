@@ -76,6 +76,7 @@
     <Compile Include="core\Button.cs" />
     <Compile Include="core\GameObject.cs" />
     <Compile Include="core\GameScene.cs" />
+    <Compile Include="GameObjects\Cloud.cs" />
     <Compile Include="HatJumper.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

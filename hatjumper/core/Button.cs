@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 
 namespace hatjumper
 {
-    class Button : GameObject
+    public class Button : GameObject
     {
         public delegate void Action();
         public Action action;

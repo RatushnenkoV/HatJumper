@@ -48,7 +48,7 @@ namespace hatjumper
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            activeScene = new Menu(this);
+            activeScene = new Menu(this, new Vector2(graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height));
             activeScene.Load();
         }
 
@@ -92,6 +92,12 @@ namespace hatjumper
         {
             activeScene.Draw(graphics, spriteBatch, gameTime);
             base.Draw(gameTime);
+        }
+
+        public void SetActiveScene(GameScene gameScene)
+        {
+            gameScene.Load();
+            activeScene = gameScene;
         }
     }
 }

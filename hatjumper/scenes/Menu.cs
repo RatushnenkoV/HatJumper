@@ -8,7 +8,7 @@ namespace hatjumper
     {
         Texture2D background;
 
-        public Menu(Game game) : base(game) { }
+        public Menu(Game game, Vector2 screenScales) : base(game, screenScales) { }
 
         public override void OnBeforeDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
         {
@@ -23,11 +23,6 @@ namespace hatjumper
         public static void btnPlayClick()
         {
             Console.WriteLine("play");
-        }
-
-        public static bool btnplayEnabled()
-        {
-            return true;
         }
 
         public static void btnShopClick()
@@ -50,11 +45,12 @@ namespace hatjumper
             background = game.Content.Load<Texture2D>("Background");
 
             // кнопка Play
-            /* Тут хуйня чтобы хоть где-то енаблед работало */
-            Button btn = new Button(new Vector2(0, 0), new Vector2(100, 50), game.Content.Load<Texture2D>("Play"), btnPlayClick);
-            btn.enabledDel = btnplayEnabled;
-            gameObjects.Add(btn);
+            gameObjects.Add(new Button(new Vector2(0, 0), new Vector2(100, 50), game.Content.Load<Texture2D>("Play"), btnPlayClick));
 
+            // Облака
+            gameObjects.Add(new Cloud(new Vector2(100, 100), new Vector2(200, 200), (int)screenScales.Y, game.Content.Load<Texture2D>("Play")));
+
+            
         }
     }
 }
