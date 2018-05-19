@@ -73,14 +73,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity1.cs" />
-    <Compile Include="core\Button.cs" />
-    <Compile Include="core\GameObject.cs" />
-    <Compile Include="core\GameScene.cs" />
+    <Compile Include="Core\Button.cs" />
+    <Compile Include="Core\GameObject.cs" />
+    <Compile Include="Core\GameScene.cs" />
     <Compile Include="GameObjects\Cloud.cs" />
     <Compile Include="HatJumper.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="scenes\Menu.cs" />
+    <Compile Include="Scenes\Main.cs" />
+    <Compile Include="Scenes\Menu.cs" />
+    <Compile Include="Shop.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
