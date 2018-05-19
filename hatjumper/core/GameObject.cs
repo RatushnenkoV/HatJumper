@@ -11,17 +11,25 @@ namespace hatjumper
         public Rectangle displayRectangle => new Rectangle((int)position.X, (int)position.Y, (int)scales.X, (int)scales.Y);
         public Texture2D sprite => GetSprite();
 
+        public GameScene scene;
+
         public GameObject() { }
 
-        public GameObject(Vector2 position, Vector2 scales)
+        public GameObject(Vector2 position, Vector2 scales, GameScene scene)
         {
             this.position = position;
             this.scales = scales;
+            this.scene = scene;
         }
 
         public bool contains(Vector2 vector2)
         {
             return displayRectangle.Contains(vector2);
+        }
+
+        public virtual void Delete()
+        {
+            scene?.Delete(this);
         }
 
         public virtual void Tap() { }

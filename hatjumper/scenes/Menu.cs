@@ -45,10 +45,10 @@ namespace hatjumper
             background = game.Content.Load<Texture2D>("Background");
 
             // кнопка Play
-            gameObjects.Add(new Button(new Vector2(0, 0), new Vector2(100, 50), game.Content.Load<Texture2D>("Play"), btnPlayClick));
+            gameObjects.Add(new Button(new Vector2(0, 0), new Vector2(100, 50), this, game.Content.Load<Texture2D>("Play"), btnPlayClick));
 
             // Облака
-            gameObjects.Add(new Cloud(new Vector2(100, 100), new Vector2(200, 200), (int)screenScales.Y, game.Content.Load<Texture2D>("Play")));
+            gameObjects.Add(new Cloud(new Vector2(100, 100), new Vector2(200, 200), this, (int)screenScales.Y, game.Content.Load<Texture2D>("Play")));
 
             
         }

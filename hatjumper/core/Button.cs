@@ -30,16 +30,14 @@ namespace hatjumper
             return isEnabled ? enabledSprite : disabledSprite;
         }
 
-        public Button(Vector2 position, Vector2 scales, Texture2D enabledSprite, Action action)
+        public Button(Vector2 position, Vector2 scales, GameScene scene, Texture2D enabledSprite, Action action): base(position, scales, scene)
         {
-            this.position = position;
-            this.scales = scales;
             this.action = action;
             this.enabledSprite = enabledSprite;
             this.enabledDel = isEnabledGet;
         }
 
-        public Button(Vector2 position, Vector2 scales, Texture2D enabledSprite, Texture2D disabledSprite, Action action) : this(position, scales, enabledSprite, action)
+        public Button(Vector2 position, Vector2 scales, GameScene scene, Texture2D enabledSprite, Texture2D disabledSprite, Action action) : this(position, scales, scene, enabledSprite, action)
         {
             this.disabledSprite = disabledSprite;
         }

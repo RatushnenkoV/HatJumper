@@ -27,6 +27,11 @@ namespace hatjumper
             }
         }
 
+        public virtual void Delete(GameObject go)
+        {
+            gameObjects.Remove(go);
+        }
+
         public virtual void OnBeforeDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
         {
 

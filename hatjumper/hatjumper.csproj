@@ -76,8 +76,11 @@
     <Compile Include="Core\Button.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\GameScene.cs" />
+    <Compile Include="GameObjects\Dangers.cs" />
     <Compile Include="GameObjects\Cloud.cs" />
     <Compile Include="HatJumper.cs" />
+    <Compile Include="GameObjects\Location.cs" />
+    <Compile Include="LocationController.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

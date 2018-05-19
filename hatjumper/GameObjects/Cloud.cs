@@ -2,21 +2,17 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using System;
-
 namespace hatjumper
 {
     class Cloud: GameObject
     {
-        public int maxX = 0;
-        public int xSpeed = 1;
+        public float maxX = 0;
+        public float xSpeed = 1;
 
         public Texture2D cloudSprite;
 
-        public Cloud(Vector2 position, Vector2 scales, int maxX, Texture2D cloudSprite)
+        public Cloud(Vector2 position, Vector2 scales, GameScene scene, float maxX, Texture2D cloudSprite): base(position, scales, scene)
         {
-            this.position = position;
-            this.scales = scales;
             this.maxX = maxX;
             this.cloudSprite = cloudSprite;
         }
