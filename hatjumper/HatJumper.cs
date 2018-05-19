@@ -15,6 +15,10 @@ namespace hatjumper
         SpriteBatch spriteBatch;
         GameScene activeScene;
 
+        public Vector2 screenScales;
+
+        public static HJGame activeGame;
+
         public HJGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -24,6 +28,8 @@ namespace hatjumper
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
             graphics.SupportedOrientations = DisplayOrientation.Portrait;
+
+            activeGame = this;
         }
 
         
@@ -47,8 +53,10 @@ namespace hatjumper
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            screenScales = new Vector2(graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            activeScene = new Menu(this, new Vector2(graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height));
+            activeScene = new Menu();
             activeScene.Load();
         }
 

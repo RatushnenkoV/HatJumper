@@ -4,13 +4,13 @@ using System;
 
 namespace hatjumper
 {
-    class Main: GameScene
+    class MainScene: GameScene
     {
         LocationController locationController;
 
         public int locationCount = 3;
 
-        public Main(Game game, Vector2 screenScales) : base(game, screenScales)
+        public MainScene() : base()
         {
             locationController = new LocationController(game, this);
         }
@@ -19,7 +19,7 @@ namespace hatjumper
         {
             foreach (var location in locationController.locations)
             {
-                spriteBatch.Draw(location.sprite, location.displayRectangle, Color.White);
+                spriteBatch.Draw(location.sprite, location.DisplayRectangle, Color.White);
             }
         }
 

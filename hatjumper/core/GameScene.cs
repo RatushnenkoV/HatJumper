@@ -9,14 +9,13 @@ namespace hatjumper
     public class GameScene
     {
         public List<GameObject> gameObjects = new List<GameObject>();
-        public Game game;
 
-        public Vector2 screenScales;
+        public HJGame game => getGame();
+        public Vector2 screenScales => getScreenScales();
 
-        public GameScene(Game game, Vector2 screenScales)
+        public GameScene()
         {
-            this.game = game;
-            this.screenScales = screenScales;
+
         }
 
         public void Update(GameTime gameTime)
@@ -50,7 +49,7 @@ namespace hatjumper
 
             foreach (var go in gameObjects)
             {
-                spriteBatch.Draw(go.sprite, go.displayRectangle, Color.White); 
+                spriteBatch.Draw(go.sprite, go.DisplayRectangle, Color.White); 
             }
 
             OnAfterDraw(graphics, spriteBatch, gameTime);
@@ -62,7 +61,7 @@ namespace hatjumper
         {
             foreach (var go in gameObjects)
             {
-                if (go.displayRectangle.Contains(pos))
+                if (go.DisplayRectangle.Contains(pos))
                 {
                     go.Tap();
                 }
@@ -72,6 +71,16 @@ namespace hatjumper
         public virtual void Load()
         {
 
+        }
+
+        public HJGame getGame()
+        {
+            return HJGame.activeGame;
+        }
+
+        public Vector2 getScreenScales()
+        {
+            return game.screenScales;
         }
     }
 

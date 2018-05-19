@@ -30,5 +30,10 @@ namespace hatjumper
         {
             return new Vector2(position.X + 1 / 2 * scales.X - 1/2 * dangerScales.X, position.Y - dangerScales.Y);
         }
+
+        public override Texture2D GetSprite()
+        {
+            return bacgroundSprite;
+        }
     }
 }

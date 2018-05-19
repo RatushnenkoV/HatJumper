@@ -15,17 +15,17 @@ namespace hatjumper
         List<String> types = new List<String>();
         public List<Location> locations = new List<Location>();
 
-        public static String locationBGBaseName = "";
-        public static String locationDangersBaseName = "";
+        public static String locationBGBaseName = "-world";
+        public static String locationDangersBaseName = "-dangers";
 
         public LocationController(Game game, GameScene scene)
         {
             this.game = game;
             this.scene = scene;
             // создать список возможных локаций
-            types.Add("0");
-            types.Add("1");
-            types.Add("2");
+            types.Add("penguin");
+            types.Add("pig");
+            types.Add("giraffe");
         }
 
         public Vector2 getScreenScalers()
@@ -44,8 +44,8 @@ namespace hatjumper
                 unusedTypes.RemoveAt(idx);
 
                 Location location = new Location(new Vector2(i * screenScales.X / count, 0), new Vector2(screenScales.X / count, screenScales.Y), scene);
-                location.bacgroundSprite = game.Content.Load<Texture2D>(locationBGBaseName);
-                location.dangersSprite = game.Content.Load<Texture2D>(locationDangersBaseName);
+                location.bacgroundSprite = game.Content.Load<Texture2D>(type+locationBGBaseName);
+                location.dangersSprite = game.Content.Load<Texture2D>(type+locationDangersBaseName);
 
                 locations.Add(location);
             }

@@ -14,11 +14,10 @@ namespace hatjumper
 {
     class Player
     {
-        int money, highScore;
+        public int money = 0 , highScore = 0;
 
         private Player()
         {
-
         }
 
         private static Player instance = new Player();
