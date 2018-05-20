@@ -20,7 +20,8 @@ namespace hatjumper
 
         public virtual void Update(float deltaTime)
         {
-            foreach (var go in gameObjects)
+            List<GameObject> gameObjectsClone = new List<GameObject>(gameObjects);
+            foreach (var go in gameObjectsClone)
             {
                 go.Update(deltaTime);
             }
@@ -62,7 +63,8 @@ namespace hatjumper
 
         public void Tap(Vector2 pos)
         {
-            foreach (var go in gameObjects)
+            List<GameObject> gameObjectsClone = new List<GameObject>(gameObjects);
+            foreach (var go in gameObjectsClone)
             {
                 if (go.DisplayRectangle.Contains(pos))
                 {

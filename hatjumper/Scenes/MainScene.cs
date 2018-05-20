@@ -13,15 +13,11 @@ namespace hatjumper
         public float sinceLastAttack = 0;
         public float timeBetweenAttacks = 1;
 
-        public float floorPart = 1 / 9;
-        public float floorH;
-        public float floorY;
+        public int startLocationIdx = 1;
 
         public MainScene() : base()
         {
             locationController = new LocationController(game, this);
-            floorH = screenScales.Y * floorPart;
-            floorY = screenScales.Y - floorH;
         }
 
         public override void OnBeforeDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
@@ -32,6 +28,14 @@ namespace hatjumper
         {
             locationController.generateLocations(locationCount);
             gameObjects.AddRange(locationController.locations);
+
+            if (startLocationIdx >= 0 && startLocationIdx < locationController.locations.Count)
+            {
+                var character = Character.GetInstance();
+                var location = locationController.locations[startLocationIdx];
+                character.Initialize(new Vector2(location.scales.X, location.scales.Y*0.15F), this, location);
+                gameObjects.Add(character);
+            }
         }
 
         public override void Update(float deltaTime)
@@ -49,6 +53,17 @@ namespace hatjumper
         void Attack()
         {
             locationController.Attack();
+        }
+
+        public void TeleportCharacterTo(Location location)
+        {
+            Character character = Character.GetInstance();
+            if (character.dead)
+            {
+                character.Initialize(new Vector2(location.scales.X, location.scales.Y * 0.15F), this, location);
+                gameObjects.Add(character);
+            }
+            Character.GetInstance().TeleportTo(location);
         }
 
     }

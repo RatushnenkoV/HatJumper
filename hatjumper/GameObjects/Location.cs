@@ -59,5 +59,14 @@ namespace hatjumper
                 go.Update(deltaTime);
             }
         }
+
+        public override void Tap()
+        {
+            base.Tap();
+            if (scene is MainScene)
+            {
+                ((MainScene)scene).TeleportCharacterTo(this);
+            }
+        }
     }
 }

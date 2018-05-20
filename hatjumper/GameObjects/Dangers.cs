@@ -64,13 +64,23 @@ namespace hatjumper
         {
             base.Update(deltaTime);
             // Пределать на глобальную пременную гравитации
-            ySpeed += 50;
+            ySpeed += GlobalVars.gravity;
             position.Y += ySpeed * deltaTime;
 
             if (active && position.Y + scales.Y >= loaction.platform.position.Y)
             {
                 ySpeed *= -GlobalVars.kenetic;
                 active = false;
+            }
+
+            Character character = Character.GetInstance();
+            if (active && !character.dead)
+            {
+                if (character.DisplayRectangle.Contains(new Vector2(position.X, position.Y+scales.Y)))
+                {
+                    character.Kill();
+                    ySpeed *= -GlobalVars.kenetic;
+                }
             }
 
             if (position.Y >= loaction.platform.position.Y)
