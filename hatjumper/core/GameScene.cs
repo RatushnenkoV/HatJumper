@@ -18,11 +18,11 @@ namespace hatjumper
 
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float deltaTime)
         {
             foreach (var go in gameObjects)
             {
-                go.Update(gameTime);
+                go.Update(deltaTime);
             }
         }
 

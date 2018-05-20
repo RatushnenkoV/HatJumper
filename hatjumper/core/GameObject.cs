@@ -34,7 +34,7 @@ namespace hatjumper
 
         public virtual void Tap() { }
 
-        public virtual void Update(GameTime gameTime) { }
+        public virtual void Update(float deltaTime) { }
 
         public virtual Texture2D GetSprite() { return null; }
     }

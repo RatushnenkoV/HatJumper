@@ -86,7 +86,9 @@ namespace hatjumper
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Exit();
 
-            activeScene.Update(gameTime);
+
+            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            activeScene.Update(deltaTime);
             // TODO: Add your update logic here
             
             base.Update(gameTime);

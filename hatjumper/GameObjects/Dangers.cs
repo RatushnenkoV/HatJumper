@@ -54,12 +54,12 @@ namespace hatjumper
             this.dangersSprite = dangersSprite;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float deltaTime)
         {
-            base.Update(gameTime);
+            base.Update(deltaTime);
 
             ySpeed += 1;
-            position.Y += ySpeed;
+            position.Y += ySpeed * deltaTime;
 
             if (position.Y >= maxY + 100)
             {

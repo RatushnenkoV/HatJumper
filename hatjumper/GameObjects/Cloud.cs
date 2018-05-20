@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace hatjumper
 {
@@ -15,13 +16,16 @@ namespace hatjumper
         {
             this.maxX = maxX;
             this.cloudSprite = cloudSprite;
+
+            Random r = new Random();
+            this.xSpeed = r.Next(50, 100);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float deltaTime)
         {
-            base.Update(gameTime);
+            base.Update(deltaTime);
 
-            position.X -= xSpeed;
+            position.X -= xSpeed * deltaTime;
             if (position.X < -scales.X)
             {
                 position.X = maxX + 100;
