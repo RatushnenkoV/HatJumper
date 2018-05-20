@@ -12,8 +12,7 @@ namespace hatjumper
         public delegate bool EnabledDel();
         public EnabledDel enabledDel;
         public bool IsEnabled => (enabledDel == null) || enabledDel.Invoke();
-
-        public Texture2D enabledSprite;
+        
         public Texture2D disabledSprite;
 
 
@@ -27,13 +26,12 @@ namespace hatjumper
 
         public override Texture2D GetSprite()
         {
-            return IsEnabled ? enabledSprite : disabledSprite;
+            return IsEnabled ? defaultSprite : disabledSprite;
         }
 
-        public Button(Vector2 position, Vector2 scales, GameScene scene, Texture2D enabledSprite, Action action): base(position, scales, scene)
+        public Button(Vector2 position, Vector2 scales, GameScene scene, Texture2D enabledSprite, Action action): base(position, scales, scene, enabledSprite)
         {
             this.action = action;
-            this.enabledSprite = enabledSprite;
             this.enabledDel = IsEnabledGet;
         }
 

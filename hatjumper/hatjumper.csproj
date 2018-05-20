@@ -78,6 +78,7 @@
     <Compile Include="Core\GameScene.cs" />
     <Compile Include="GameObjects\Dangers.cs" />
     <Compile Include="GameObjects\Cloud.cs" />
+    <Compile Include="GlobalVars.cs" />
     <Compile Include="HatJumper.cs" />
     <Compile Include="GameObjects\Location.cs" />
     <Compile Include="LocationController.cs" />

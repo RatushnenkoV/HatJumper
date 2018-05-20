@@ -36,6 +36,14 @@ namespace hatjumper
 
         }
 
+        public virtual void OnDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            foreach (var go in gameObjects)
+            {
+                go.Draw(spriteBatch);
+            }
+        }
+
         public virtual void OnAfterDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
         {
 
@@ -46,12 +54,7 @@ namespace hatjumper
             spriteBatch.Begin();
 
             OnBeforeDraw(graphics, spriteBatch, gameTime);
-
-            foreach (var go in gameObjects)
-            {
-                spriteBatch.Draw(go.sprite, go.DisplayRectangle, Color.White); 
-            }
-
+            OnDraw(graphics, spriteBatch, gameTime);
             OnAfterDraw(graphics, spriteBatch, gameTime);
 
             spriteBatch.End();

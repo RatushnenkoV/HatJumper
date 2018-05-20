@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using System;
 using System.Collections.Generic;
 
 namespace hatjumper
@@ -19,7 +18,7 @@ namespace hatjumper
             }
         }
 
-        public static Dangers Pop(Vector2 position, Vector2 scales, GameScene scene, float maxY, Texture2D dangersSprite)
+        public static Dangers Pop(Vector2 position, Vector2 scales, GameScene scene, float maxY, Texture2D dangersSprite, Location location)
         {
             Dangers dangers;
 
@@ -30,10 +29,13 @@ namespace hatjumper
                 dangers.scales = scales;
                 dangers.scene = scene;
                 dangers.maxY = maxY;
-                dangers.dangersSprite = dangersSprite;
+                dangers.defaultSprite = dangersSprite;
+                dangers.loaction = location;
+                dangers.ySpeed = Dangers.minYSpeed;
+                dangers.active = true;
             } else
             {
-                dangers = new Dangers(position, scales, scene, maxY, dangersSprite);
+                dangers = new Dangers(position, scales, scene, maxY, dangersSprite, location);
             }
             return dangers;
         }
@@ -43,36 +45,35 @@ namespace hatjumper
     {
         public float maxY = 0;
         public float ySpeed;
+        public static float minYSpeed = 500;
 
-        bool active;
+        public bool active;
+        public Location loaction;
 
-        public Texture2D dangersSprite;
-
-        public Dangers(Vector2 position, Vector2 scales, GameScene scene, float maxY, Texture2D dangersSprite): base(position, scales, scene)
+        public Dangers(Vector2 position, Vector2 scales, GameScene scene, float maxY, Texture2D dangersSprite, Location location): base(position, scales, scene, dangersSprite)
         {
-            ySpeed = 500;
+            ySpeed = minYSpeed;
             active = true;
             this.position = position;
             this.scales = scales;
             this.maxY = maxY;
-            this.dangersSprite = dangersSprite;
+            this.loaction = location;
         }
 
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-
             // Пределать на глобальную пременную гравитации
             ySpeed += 50;
             position.Y += ySpeed * deltaTime;
 
-            if (active && position.Y >= 1000)
+            if (active && position.Y + scales.Y >= loaction.platform.position.Y)
             {
-                ySpeed *= (float)(-0.2);
+                ySpeed *= -GlobalVars.kenetic;
                 active = false;
             }
 
-            if (position.Y >= maxY + 100)
+            if (position.Y >= loaction.platform.position.Y)
             {
                 Delete();
             }
@@ -80,12 +81,9 @@ namespace hatjumper
 
         public override void Delete()
         {
-
+            DangersStack.Push(this);
+            loaction.gameObjects.Remove(this);
         }
 
-        public override Texture2D GetSprite()
-        {
-            return dangersSprite;
-        }
     }
 }

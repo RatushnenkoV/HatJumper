@@ -17,6 +17,7 @@ namespace hatjumper
 
         public static String locationBGBaseName = "-world";
         public static String locationDangersBaseName = "-dangers";
+        public static String locationPlatformBaseName = "-platform";
 
         public LocationController(Game game, GameScene scene)
         {
@@ -43,17 +44,21 @@ namespace hatjumper
                 string type = unusedTypes[idx];
                 unusedTypes.RemoveAt(idx);
 
-                Location location = new Location(new Vector2(i * screenScales.X / count, 0), new Vector2(screenScales.X / count, screenScales.Y), scene);
-                location.bacgroundSprite = game.Content.Load<Texture2D>(type+locationBGBaseName);
-                location.dangersSprite = game.Content.Load<Texture2D>(type+locationDangersBaseName);
+                Location location = new Location(
+                        new Vector2(i * screenScales.X / count, 0),
+                        new Vector2(screenScales.X / count, screenScales.Y),
+                        scene,
+                        game.Content.Load<Texture2D>(type + locationBGBaseName),
+                        game.Content.Load<Texture2D>(type + locationDangersBaseName),
+                        game.Content.Load<Texture2D>(type + locationPlatformBaseName)
+                    );
 
                 locations.Add(location);
             }
         }
 
-        public List<GameObject> getDangersList()
+        public void Attack()
         {
-            var res = new List<GameObject>();
             Random r = new Random();
 
             var used = new HashSet<int>();
@@ -62,12 +67,10 @@ namespace hatjumper
                 int idx = r.Next(locations.Count);
                 if (!used.Contains(idx))
                 {
-                    res.Add(locations[idx].GetDangers());
+                    locations[idx].Attack();
                     used.Add(idx);
                 }
             }
-
-            return res;
         }
     }
 }

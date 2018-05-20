@@ -13,22 +13,25 @@ namespace hatjumper
         public float sinceLastAttack = 0;
         public float timeBetweenAttacks = 1;
 
+        public float floorPart = 1 / 9;
+        public float floorH;
+        public float floorY;
+
         public MainScene() : base()
         {
             locationController = new LocationController(game, this);
+            floorH = screenScales.Y * floorPart;
+            floorY = screenScales.Y - floorH;
         }
 
         public override void OnBeforeDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
         {
-            foreach (var location in locationController.locations)
-            {
-                spriteBatch.Draw(location.sprite, location.DisplayRectangle, Color.White);
-            }
         }
 
         public override void Load()
         {
             locationController.generateLocations(locationCount);
+            gameObjects.AddRange(locationController.locations);
         }
 
         public override void Update(float deltaTime)
@@ -45,7 +48,8 @@ namespace hatjumper
 
         void Attack()
         {
-            gameObjects.AddRange(locationController.getDangersList());
+            locationController.Attack();
         }
+
     }
 }

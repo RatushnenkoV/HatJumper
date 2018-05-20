@@ -10,12 +10,9 @@ namespace hatjumper
         public float maxX = 0;
         public float xSpeed = 1;
 
-        public Texture2D cloudSprite;
-
-        public Cloud(Vector2 position, Vector2 scales, GameScene scene, float maxX, Texture2D cloudSprite): base(position, scales, scene)
+        public Cloud(Vector2 position, Vector2 scales, GameScene scene, float maxX, Texture2D cloudSprite): base(position, scales, scene, cloudSprite)
         {
             this.maxX = maxX;
-            this.cloudSprite = cloudSprite;
 
             Random r = new Random();
             this.xSpeed = r.Next(50, 100);
@@ -30,11 +27,6 @@ namespace hatjumper
             {
                 position.X = maxX + 100;
             }
-        }
-
-        public override Texture2D GetSprite()
-        {
-            return cloudSprite;
         }
     }
 }
