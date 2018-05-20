@@ -24,6 +24,8 @@ namespace hatjumper
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
             graphics.SupportedOrientations = DisplayOrientation.Portrait;
+
+            //test
         }
 
         
