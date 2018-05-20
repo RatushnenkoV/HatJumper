@@ -10,6 +10,9 @@ namespace hatjumper
 
         public int locationCount = 3;
 
+        public float sinceLastAttack = 0;
+        public float timeBetweenAttacks = 1;
+
         public MainScene() : base()
         {
             locationController = new LocationController(game, this);
@@ -26,6 +29,23 @@ namespace hatjumper
         public override void Load()
         {
             locationController.generateLocations(locationCount);
+        }
+
+        public override void Update(float deltaTime)
+        {
+            base.Update(deltaTime);
+
+            sinceLastAttack += deltaTime;
+            if (sinceLastAttack >= timeBetweenAttacks)
+            {
+                Attack();
+                sinceLastAttack = 0;
+            }
+        }
+
+        void Attack()
+        {
+            gameObjects.AddRange(locationController.getDangersList());
         }
     }
 }

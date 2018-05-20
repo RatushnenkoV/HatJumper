@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input.Touch;
-using System.Collections.Generic;
+using System;
 namespace hatjumper
 {
     class Location: GameObject
@@ -23,12 +22,13 @@ namespace hatjumper
 
         private Vector2 GetDangerScales()
         {
-            return new Vector2(scales.Y / 3, scales.Y / 3);
+            return new Vector2(scales.X / 3, scales.X / 3);
         }
 
         private Vector2 GetDangersStartPosition()
         {
-            return new Vector2(position.X + 1 / 2 * scales.X - 1/2 * dangerScales.X, position.Y - dangerScales.Y);
+            Console.WriteLine("{0}, {1}, {2}, {3}", position.X, (scales.X / 2), (dangerScales.X / 2), position.X + (scales.X / 2) - (dangerScales.X / 2));
+            return new Vector2(position.X + (scales.X/2) - (dangerScales.X/2), position.Y - dangerScales.Y);
         }
 
         public override Texture2D GetSprite()

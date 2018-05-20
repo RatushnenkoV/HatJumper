@@ -44,10 +44,14 @@ namespace hatjumper
         public float maxY = 0;
         public float ySpeed;
 
+        bool active;
+
         public Texture2D dangersSprite;
 
         public Dangers(Vector2 position, Vector2 scales, GameScene scene, float maxY, Texture2D dangersSprite): base(position, scales, scene)
         {
+            ySpeed = 500;
+            active = true;
             this.position = position;
             this.scales = scales;
             this.maxY = maxY;
@@ -58,8 +62,15 @@ namespace hatjumper
         {
             base.Update(deltaTime);
 
-            ySpeed += 1;
+            // Пределать на глобальную пременную гравитации
+            ySpeed += 50;
             position.Y += ySpeed * deltaTime;
+
+            if (active && position.Y >= 1000)
+            {
+                ySpeed *= (float)(-0.2);
+                active = false;
+            }
 
             if (position.Y >= maxY + 100)
             {

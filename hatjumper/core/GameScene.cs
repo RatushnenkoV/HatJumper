@@ -18,7 +18,7 @@ namespace hatjumper
 
         }
 
-        public void Update(float deltaTime)
+        public virtual void Update(float deltaTime)
         {
             foreach (var go in gameObjects)
             {
