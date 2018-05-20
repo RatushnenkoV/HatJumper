@@ -9,27 +9,39 @@ namespace hatjumper
     public class GameScene
     {
         public List<GameObject> gameObjects = new List<GameObject>();
-        public Game game;
 
-        public Vector2 screenScales;
+        public HJGame game => getGame();
+        public Vector2 screenScales => getScreenScales();
 
-        public GameScene(Game game, Vector2 screenScales)
+        public GameScene()
         {
-            this.game = game;
-            this.screenScales = screenScales;
+
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(float deltaTime)
         {
             foreach (var go in gameObjects)
             {
-                go.Update(gameTime);
+                go.Update(deltaTime);
             }
+        }
+
+        public virtual void Delete(GameObject go)
+        {
+            gameObjects.Remove(go);
         }
 
         public virtual void OnBeforeDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
         {
 
+        }
+
+        public virtual void OnDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            foreach (var go in gameObjects)
+            {
+                go.Draw(spriteBatch);
+            }
         }
 
         public virtual void OnAfterDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
@@ -42,12 +54,7 @@ namespace hatjumper
             spriteBatch.Begin();
 
             OnBeforeDraw(graphics, spriteBatch, gameTime);
-
-            foreach (var go in gameObjects)
-            {
-                spriteBatch.Draw(go.sprite, go.displayRectangle, Color.White); 
-            }
-
+            OnDraw(graphics, spriteBatch, gameTime);
             OnAfterDraw(graphics, spriteBatch, gameTime);
 
             spriteBatch.End();
@@ -57,7 +64,7 @@ namespace hatjumper
         {
             foreach (var go in gameObjects)
             {
-                if (go.displayRectangle.Contains(pos))
+                if (go.DisplayRectangle.Contains(pos))
                 {
                     go.Tap();
                 }
@@ -67,6 +74,16 @@ namespace hatjumper
         public virtual void Load()
         {
 
+        }
+
+        public HJGame getGame()
+        {
+            return HJGame.activeGame;
+        }
+
+        public Vector2 getScreenScales()
+        {
+            return game.screenScales;
         }
     }
 

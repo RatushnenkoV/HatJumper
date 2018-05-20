@@ -1,40 +1,32 @@
 ﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using System;
 
 namespace hatjumper
 {
     class Cloud: GameObject
     {
-        public int maxX = 0;
-        public int xSpeed = 1;
+        public float maxX = 0;
+        public float xSpeed = 1;
 
-        public Texture2D cloudSprite;
-
-        public Cloud(Vector2 position, Vector2 scales, int maxX, Texture2D cloudSprite)
+        public Cloud(Vector2 position, Vector2 scales, GameScene scene, float maxX, Texture2D cloudSprite): base(position, scales, scene, cloudSprite)
         {
-            this.position = position;
-            this.scales = scales;
             this.maxX = maxX;
-            this.cloudSprite = cloudSprite;
+
+            Random r = new Random();
+            this.xSpeed = r.Next(50, 100);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float deltaTime)
         {
-            base.Update(gameTime);
+            base.Update(deltaTime);
 
-            position.X -= xSpeed;
+            position.X -= xSpeed * deltaTime;
             if (position.X < -scales.X)
             {
                 position.X = maxX + 100;
             }
-        }
-
-        public override Texture2D GetSprite()
-        {
-            return cloudSprite;
         }
     }
 }
