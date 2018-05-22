@@ -17,6 +17,9 @@ namespace hatjumper
         float maxH, minH = 10;
         float ySpeed;
 
+        float changeHSpeed = 2500;
+        float jumpSpeed = 400;
+
         private Character()
         {
             dead = true;
@@ -65,6 +68,9 @@ namespace hatjumper
         {
             dead = true;
             ySpeed = -1000;
+            if (tpOut) {
+                tpInStart();
+            }
         }
 
         public void tpOutStart()
@@ -90,8 +96,7 @@ namespace hatjumper
 
         public override void Update(float deltaTime)
         {
-            float changeHSpeed = 2500;
-            if (tpIn && !dead)
+            if (tpIn)
             {
                 position.Y -= changeHSpeed * deltaTime;
                 scales.Y += changeHSpeed * deltaTime;
@@ -101,6 +106,9 @@ namespace hatjumper
                     scales.Y = maxH;
                     position.Y = activeLocation.platform.position.Y - scales.Y;
                     tpIn = false;
+
+                    ySpeed = -jumpSpeed;
+                    position.Y += ySpeed * deltaTime;
                 }
             }
 
@@ -121,13 +129,22 @@ namespace hatjumper
 
             if (dead)
             {
-                ySpeed += GlobalVars.gravity;
-                position.Y += ySpeed * deltaTime;
-                if (position.Y > scene.game.screenScales.Y)
+                if (Math.Abs(ySpeed) < 5)
                 {
                     Delete();
                 }
+            } else {
+                if (Math.Abs((position.Y + scales.Y) - activeLocation.platform.position.Y) < 5)
+                {
+                    if (ySpeed >= 0)
+                    {
+                        ySpeed = 0;
+                    }
+                }
             }
+
+            position.Y += ySpeed * deltaTime;
+            ySpeed += GlobalVars.gravity;
         }
     }
 }
