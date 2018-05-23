@@ -104,6 +104,11 @@ namespace hatjumper
             base.Draw(gameTime);
         }
 
+        public void ChangeScene(GameScene gameScene)
+        {
+            activeScene.ChangeScene(gameScene);
+        }
+
         public void SetActiveScene(GameScene gameScene)
         {
             gameScene.Load();

@@ -38,7 +38,7 @@ namespace hatjumper
         {
             this.scales = scales;
             this.scene = scene;
-            setLocation(location);
+            SetLocation(location);
 
             // переделать 
             string[] spriteNames = { "penguin", "giraffe", "pig" };
@@ -61,25 +61,28 @@ namespace hatjumper
             }
 
             nextLocation = location;
-            tpOutStart();
+            TpOutStart();
         }
 
         public void Kill()
         {
             dead = true;
-            ySpeed = -1000;
-            if (tpOut) {
-                tpInStart();
-            }
+
+            Vector2 poofScales = new Vector2(scales.Y, scales.Y);
+            Vector2 poofPos = new Vector2(position.X + scales.X / 2 - poofScales.X / 2, position.Y);
+            Poof poof = new Poof(poofPos, poofScales, scene);
+            scene.gameObjects.Add(poof);
+            Delete();
+
         }
 
-        public void tpOutStart()
+        public void TpOutStart()
         {
             tpOut = true;
             tpIn = false;
         }
 
-        public void setLocation(Location location)
+        public void SetLocation(Location location)
         {
             float x = location.position.X + location.scales.X / 2 - scales.X / 2;
             float y = location.platform.position.Y - scales.Y;
@@ -88,7 +91,7 @@ namespace hatjumper
             activeLocation = location;
         }
 
-        void tpInStart()
+        void TpInStart()
         {
             tpIn = true;
             tpOut = false;
@@ -121,9 +124,9 @@ namespace hatjumper
                 {
                     scales.Y = 0;
                     position.Y = activeLocation.platform.position.Y;
-                    setLocation(nextLocation);
+                    SetLocation(nextLocation);
                     nextLocation = null;
-                    tpInStart();
+                    TpInStart();
                 }
             }
 

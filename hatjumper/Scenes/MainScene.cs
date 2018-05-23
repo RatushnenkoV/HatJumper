@@ -15,6 +15,8 @@ namespace hatjumper
 
         public int startLocationIdx = 1;
 
+        public ChangingSceneCloud changingScene;
+
         public MainScene() : base()
         {
             locationController = new LocationController(game, this);
@@ -36,6 +38,9 @@ namespace hatjumper
                 character.Initialize(new Vector2(location.scales.X, location.scales.Y*0.15F), this, location);
                 gameObjects.Add(character);
             }
+
+            changingScene = new ChangingSceneCloud(this, ChangingState.changingIn);
+            gameObjects.Add(changingScene);
         }
 
         public override void Update(float deltaTime)
@@ -52,7 +57,10 @@ namespace hatjumper
 
         void Attack()
         {
-            locationController.Attack();
+            if (sceneStarted)
+            {
+                locationController.Attack();
+            }
         }
 
         public void TeleportCharacterTo(Location location)
@@ -66,5 +74,15 @@ namespace hatjumper
             Character.GetInstance().TeleportTo(location);
         }
 
+        public override bool CanStartScene()
+        {
+            return (changingScene != null) && (changingScene.position.Y + changingScene.scales.Y <= 0);
+        }
+
+        public override void OnAfterStartingScene()
+        {
+            base.OnAfterStartingScene();
+            changingScene = null;
+        }
     }
 }

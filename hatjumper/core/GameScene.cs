@@ -10,8 +10,13 @@ namespace hatjumper
     {
         public List<GameObject> gameObjects = new List<GameObject>();
 
-        public HJGame game => getGame();
-        public Vector2 screenScales => getScreenScales();
+        public HJGame game => GetGame();
+        public Vector2 screenScales => GetScreenScales();
+
+        public GameScene nextScene;
+        bool endingScene = false;
+        public bool sceneStarted = false;
+
 
         public GameScene()
         {
@@ -24,6 +29,17 @@ namespace hatjumper
             foreach (var go in gameObjectsClone)
             {
                 go.Update(deltaTime);
+            }
+
+            if (endingScene && CanEndScene())
+            {
+                game.SetActiveScene(nextScene);
+            } 
+
+            if (!sceneStarted && CanStartScene())
+            {
+                sceneStarted = true;
+                OnAfterStartingScene();
             }
         }
 
@@ -78,14 +94,41 @@ namespace hatjumper
 
         }
 
-        public HJGame getGame()
+        public HJGame GetGame()
         {
             return HJGame.activeGame;
         }
 
-        public Vector2 getScreenScales()
+        public Vector2 GetScreenScales()
         {
             return game.screenScales;
+        }
+
+        public void ChangeScene(GameScene nextScene)
+        {
+            OnBeforeEndingScene(nextScene);
+            this.nextScene = nextScene;
+            endingScene = true;
+        }
+
+        public virtual void OnBeforeEndingScene(GameScene nextScene)
+        {
+
+        }
+
+        public virtual bool CanEndScene()
+        {
+            return true;
+        }
+
+        public virtual void OnAfterStartingScene()
+        {
+
+        }
+
+        public virtual bool CanStartScene()
+        {
+            return true;
         }
     }
 

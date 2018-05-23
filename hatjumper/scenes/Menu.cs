@@ -4,9 +4,12 @@ using System;
 
 namespace hatjumper
 {
+
     class Menu: GameScene
     {
         Texture2D background;
+
+        ChangingSceneCloud changingSceneCloud;
 
         public Menu() : base() { }
 
@@ -22,7 +25,7 @@ namespace hatjumper
 
         public static void btnPlayClick()
         {
-            HJGame.activeGame?.SetActiveScene(new MainScene());
+            HJGame.activeGame?.ChangeScene(new MainScene());
         }
 
         public static void btnShopClick()
@@ -51,7 +54,25 @@ namespace hatjumper
 
             // кнопка Play
             gameObjects.Add(new Button(new Vector2(screenScales.X / 2, screenScales.Y / 2), new Vector2(200, 100), this, game.Content.Load<Texture2D>("Play"), btnPlayClick));
+        }
 
+        public override void OnBeforeEndingScene(GameScene nextScene)
+        {
+            base.OnBeforeEndingScene(nextScene);
+
+            changingSceneCloud = new ChangingSceneCloud(this, ChangingState.changingOut);
+            gameObjects.Add(changingSceneCloud);
+        }
+
+        public override bool CanEndScene()
+        {
+            if (changingSceneCloud != null)
+            {
+                Console.WriteLine("Позиция облака = {0}, конец облака = {1}", changingSceneCloud.position.Y, changingSceneCloud.position.Y + changingSceneCloud.scales.Y);
+                return changingSceneCloud.position.Y + changingSceneCloud.scales.Y <= screenScales.Y;
+            }
+
+            return false;
         }
     }
 }

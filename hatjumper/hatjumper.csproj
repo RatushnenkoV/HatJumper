@@ -76,9 +76,11 @@
     <Compile Include="Core\Button.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\GameScene.cs" />
+    <Compile Include="GameObjects\ChangingScene.cs" />
     <Compile Include="GameObjects\Character.cs" />
     <Compile Include="GameObjects\Dangers.cs" />
     <Compile Include="GameObjects\Cloud.cs" />
+    <Compile Include="GameObjects\Poof.cs" />
     <Compile Include="GlobalVars.cs" />
     <Compile Include="HatJumper.cs" />
     <Compile Include="GameObjects\Location.cs" />
