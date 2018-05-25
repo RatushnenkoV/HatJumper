@@ -17,9 +17,12 @@ namespace hatjumper
 
         public ChangingSceneCloud changingScene;
 
+        public BonusController bonusController;
+
         public MainScene() : base()
         {
             locationController = new LocationController(game, this);
+            this.bonusController = new BonusController(this);
         }
 
         public override void OnBeforeDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
@@ -28,7 +31,7 @@ namespace hatjumper
 
         public override void Load()
         {
-            locationController.generateLocations(locationCount);
+            locationController.GenerateLocations(locationCount);
             gameObjects.AddRange(locationController.locations);
 
             if (startLocationIdx >= 0 && startLocationIdx < locationController.locations.Count)
@@ -53,14 +56,12 @@ namespace hatjumper
                 Attack();
                 sinceLastAttack = 0;
             }
+            bonusController.Update(deltaTime);
         }
 
         void Attack()
         {
-            if (sceneStarted)
-            {
-                locationController.Attack();
-            }
+            locationController.Attack();
         }
 
         public void TeleportCharacterTo(Location location)
@@ -83,6 +84,22 @@ namespace hatjumper
         {
             base.OnAfterStartingScene();
             changingScene = null;
+        }
+
+        public void SetTimeKoef(float koef)
+        {
+            foreach (var location in locationController.locations)
+            {
+                location.SetTimeKoef(koef);
+            }
+        }
+
+        public void SetAttackDel(AttackDel attackDel)
+        {
+            foreach (var location in locationController.locations)
+            {
+                location.attackDel = attackDel;
+            }
         }
     }
 }

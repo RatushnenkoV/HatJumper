@@ -22,22 +22,22 @@ namespace hatjumper
 
         private static Player instance = new Player();
 
-        public static Player getInstance()
+        public static Player GetInstance()
         {
             return instance;
         }
 
-        public void loadData()
+        public void LoadData()
         {
             // с сохранением и загрузкой ебанина
         }
 
-        public void saveData()
+        public void SaveData()
         {
 
         }
 
-        public bool checkHighScore(int score)
+        public bool CheckHighScore(int score)
         {
             if (score > highScore)
             {

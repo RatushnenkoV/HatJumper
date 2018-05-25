@@ -73,6 +73,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity1.cs" />
+    <Compile Include="Bonuses\BonusCoins.cs" />
+    <Compile Include="Bonuses\BonusController.cs" />
+    <Compile Include="Bonuses\Bonus.cs" />
+    <Compile Include="Bonuses\BonusHelmet.cs" />
+    <Compile Include="Bonuses\BonusMinusOne.cs" />
+    <Compile Include="Bonuses\BonusTime.cs" />
+    <Compile Include="Bonuses\Money.cs" />
     <Compile Include="Core\Button.cs" />
     <Compile Include="Core\GameObject.cs" />
     <Compile Include="Core\GameScene.cs" />

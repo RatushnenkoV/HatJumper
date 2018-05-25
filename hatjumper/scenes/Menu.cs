@@ -23,22 +23,22 @@ namespace hatjumper
             }
         }
 
-        public static void btnPlayClick()
+        public static void BtnPlayClick()
         {
             HJGame.activeGame?.ChangeScene(new MainScene());
         }
 
-        public static void btnShopClick()
+        public static void BtnShopClick()
         {
 
         }
 
-        public static void btnSoundClick()
+        public static void BtnSoundClick()
         {
 
         }
 
-        public static void btnVibroClick()
+        public static void BtnVibroClick()
         {
 
         }
@@ -53,7 +53,7 @@ namespace hatjumper
             gameObjects.Add(new Cloud(new Vector2(500, screenScales.Y*3/4), new Vector2(358, 165), this, (int)screenScales.Y, game.Content.Load<Texture2D>("Cloud3")));
 
             // кнопка Play
-            gameObjects.Add(new Button(new Vector2(screenScales.X / 2, screenScales.Y / 2), new Vector2(200, 100), this, game.Content.Load<Texture2D>("Play"), btnPlayClick));
+            gameObjects.Add(new Button(new Vector2(screenScales.X / 2, screenScales.Y / 2), new Vector2(200, 100), this, game.Content.Load<Texture2D>("Play"), BtnPlayClick));
         }
 
         public override void OnBeforeEndingScene(GameScene nextScene)

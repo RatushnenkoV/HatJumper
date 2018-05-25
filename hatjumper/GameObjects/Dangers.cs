@@ -9,6 +9,7 @@ namespace hatjumper
     {
         public static int maxCount = 10;
         public static Stack<Dangers> dangersStack = new Stack<Dangers>();
+        
 
         public static void Push(Dangers dangers)
         {
@@ -50,6 +51,8 @@ namespace hatjumper
         public bool active;
         public Location loaction;
 
+        public Dangers() { }
+
         public Dangers(Vector2 position, Vector2 scales, GameScene scene, float maxY, Texture2D dangersSprite, Location location): base(position, scales, scene, dangersSprite)
         {
             ySpeed = minYSpeed;
@@ -58,6 +61,11 @@ namespace hatjumper
             this.scales = scales;
             this.maxY = maxY;
             this.loaction = location;
+        }
+
+        public Dangers(Dangers dangers) : this(dangers.position, dangers.scales, dangers.scene, dangers.maxY, dangers.defaultSprite, dangers.loaction)
+        {
+
         }
 
         public override void Update(float deltaTime)
@@ -69,8 +77,7 @@ namespace hatjumper
 
             if (active && position.Y + scales.Y >= loaction.platform.position.Y)
             {
-                ySpeed *= -GlobalVars.kenetic;
-                active = false;
+                HitFloor();
             }
 
             Character character = Character.GetInstance();
@@ -78,8 +85,7 @@ namespace hatjumper
             {
                 if (character.DisplayRectangle.Contains(new Vector2(position.X, position.Y+scales.Y)))
                 {
-                    character.Kill();
-                    ySpeed *= -GlobalVars.kenetic;
+                    Hit(character);
                 }
             }
 
@@ -91,9 +97,24 @@ namespace hatjumper
 
         public override void Delete()
         {
-            DangersStack.Push(this);
+            if (GetType() == typeof(Dangers))
+            {
+                DangersStack.Push(this);
+            }
             loaction.gameObjects.Remove(this);
         }
 
+        public virtual void Hit(Character character)
+        {
+            ySpeed *= -GlobalVars.kenetic;
+            character.Hit();
+            active = false;
+        }
+
+        public virtual void HitFloor()
+        {
+            ySpeed *= -GlobalVars.kenetic;
+            active = false;
+        }
     }
 }

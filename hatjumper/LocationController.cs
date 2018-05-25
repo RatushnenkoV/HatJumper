@@ -10,7 +10,7 @@ namespace hatjumper
     {
         Game game;
         GameScene scene;
-        public Vector2 screenScales => getScreenScalers();
+        public Vector2 screenScales => GetScreenScalers();
 
         List<String> types = new List<String>();
         public List<Location> locations = new List<Location>();
@@ -29,12 +29,12 @@ namespace hatjumper
             types.Add("giraffe");
         }
 
-        public Vector2 getScreenScalers()
+        public Vector2 GetScreenScalers()
         {
             return scene.screenScales;
         }
 
-        public void generateLocations(int count)
+        public void GenerateLocations(int count)
         {
             Random r = new Random();
             var unusedTypes = new List<string>(types);
@@ -57,7 +57,7 @@ namespace hatjumper
             }
         }
 
-        public void Attack()
+        public void Attack(Dangers dangers = null)
         {
             Random r = new Random();
 
@@ -71,6 +71,11 @@ namespace hatjumper
                     used.Add(idx);
                 }
             }
+        }
+
+        public int GetActiveLocationCount()
+        {
+            return locations.Count;
         }
     }
 }

@@ -20,9 +20,12 @@ namespace hatjumper
         float changeHSpeed = 2500;
         float jumpSpeed = 400;
 
+        int lives = 1;
+
         private Character()
         {
             dead = true;
+            
         }
 
         public static Character GetInstance()
@@ -51,6 +54,7 @@ namespace hatjumper
             tpIn = false;
             tpOut = false;
             dead = false;
+            lives = 1;
         }
 
         public void TeleportTo(Location location)
@@ -62,6 +66,15 @@ namespace hatjumper
 
             nextLocation = location;
             TpOutStart();
+        }
+
+        public void Hit()
+        {
+            lives--;
+            if (lives <= 0)
+            {
+                Kill();
+            }
         }
 
         public void Kill()
@@ -148,6 +161,11 @@ namespace hatjumper
 
             position.Y += ySpeed * deltaTime;
             ySpeed += GlobalVars.gravity;
+        }
+
+        public void setLives(int lives)
+        {
+            this.lives = lives;
         }
     }
 }

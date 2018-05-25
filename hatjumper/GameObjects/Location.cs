@@ -5,10 +5,12 @@ using System.Collections.Generic;
 
 namespace hatjumper
 {
-    class Location: GameObject
+    public delegate void AttackDel(Location location);
+
+    public class Location: GameObject
     {
-        private Vector2 dangersStartPosition => GetDangersStartPosition();
-        private Vector2 dangerScales => GetDangerScales();
+        public Vector2 dangersStartPosition => GetDangersStartPosition();
+        public Vector2 dangerScales => GetDangerScales();
 
         public Texture2D dangersSprite;
 
@@ -17,15 +19,40 @@ namespace hatjumper
 
         public static float platformPart = 1f/9;
 
+        public static Random random = new Random();
+
+        float timeKoef = 1;
+
+        public AttackDel attackDel;
+
+        public bool active;
+
         public Location(Vector2 position, Vector2 scales, GameScene scene, Texture2D bgSprite, Texture2D dangersSprite, Texture2D platformSprite): base(position, scales, scene, bgSprite)
         {
             this.dangersSprite = dangersSprite;
             this.platform = new GameObject(new Vector2(position.X, position.Y + (1 - platformPart) * scales.Y), new Vector2(scales.X, platformPart * scales.Y), scene, platformSprite);
+            this.attackDel = DefaultAttak;
+        }
+
+        public static void DefaultAttak(Location location)
+        {
+            Dangers dangers;
+            // исправить
+            if (random.Next(100) < 50)
+            {
+                dangers = Bonus.GetBonus(location.dangersStartPosition, location.dangerScales, location.scene, location.scene.game.screenScales.Y + 100, location);
+            }
+            else
+            {
+                dangers = DangersStack.Pop(location.dangersStartPosition, location.dangerScales, location.scene, location.scene.game.screenScales.Y + 100, location.dangersSprite, location);
+            }
+
+            location.gameObjects.Add(dangers);
         }
 
         public void Attack()
         {
-            gameObjects.Add(DangersStack.Pop(dangersStartPosition, dangerScales, scene, scales.Y, dangersSprite, this));
+            attackDel.Invoke(this);
         }
 
         private Vector2 GetDangerScales()
@@ -56,7 +83,7 @@ namespace hatjumper
             List<GameObject> gameObjectsCopy = new List<GameObject>(gameObjects);
             foreach (var go in gameObjectsCopy)
             {
-                go.Update(deltaTime);
+                go.Update(deltaTime*timeKoef);
             }
         }
 
@@ -67,6 +94,11 @@ namespace hatjumper
             {
                 ((MainScene)scene).TeleportCharacterTo(this);
             }
+        }
+
+        public void SetTimeKoef(float koef)
+        {
+            timeKoef = koef;
         }
     }
 }
