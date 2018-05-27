@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-
-namespace hatjumper.Bonuses
+namespace hatjumper
 {
-    class BonusMinusOne
+    class BonusMinusOne: Bonus
     {
+        public BonusMinusOne(Vector2 position, Vector2 scales, GameScene scene, float maxY, Location location) : base(position, scales, scene, maxY, location)
+        {
+            this.defaultSprite = HJGame.activeGame.Content.Load<Texture2D>("BonusMinusOne");
+        }
+
+        public override void Hit(Character character)
+        {
+            if (scene is MainScene)
+            {
+                ((MainScene)scene).bonusController.MinusOneBonusAdd();
+            }
+            base.Hit(character);
+        }
     }
 }

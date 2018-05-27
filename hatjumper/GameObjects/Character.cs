@@ -7,7 +7,7 @@ namespace hatjumper
     class Character: GameObject
     {
         static Character instance;
-        Location activeLocation;
+        public Location activeLocation;
 
         public bool dead;
 

@@ -56,6 +56,7 @@ namespace hatjumper
             screenScales = new Vector2(graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height);
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             activeScene = new Menu();
             activeScene.Load();
         }

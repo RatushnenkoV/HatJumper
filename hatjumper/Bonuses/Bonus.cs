@@ -15,6 +15,8 @@ namespace hatjumper
 
         public override void Hit(Character character)
         {
+            Spark.GenerateSparks(position + (scales / 2), scene);
+
             Delete();
         }
 
@@ -27,7 +29,7 @@ namespace hatjumper
 
         public static Bonus GetBonus(Vector2 position, Vector2 scales, GameScene scene, float maxY, Location location)
         {
-            return new BonusHelmet(position, scales, scene, maxY, location);
+            return new BonusMinusOne(position, scales, scene, maxY, location);
             /*
             Random r = new Random();
             int k = r.Next(4);

@@ -27,11 +27,15 @@ namespace hatjumper
 
         public bool active;
 
+        public Shadow shadow;
+
         public Location(Vector2 position, Vector2 scales, GameScene scene, Texture2D bgSprite, Texture2D dangersSprite, Texture2D platformSprite): base(position, scales, scene, bgSprite)
         {
             this.dangersSprite = dangersSprite;
             this.platform = new GameObject(new Vector2(position.X, position.Y + (1 - platformPart) * scales.Y), new Vector2(scales.X, platformPart * scales.Y), scene, platformSprite);
             this.attackDel = DefaultAttak;
+            this.active = true;
+            this.shadow = new Shadow(position, scales, scene);
         }
 
         public static void DefaultAttak(Location location)
@@ -65,9 +69,9 @@ namespace hatjumper
             return new Vector2(position.X + (scales.X/2) - (dangerScales.X/2), position.Y - dangerScales.Y);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void OnDraw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
+            base.OnDraw(spriteBatch);
 
             foreach (GameObject go in gameObjects)
             {
@@ -75,6 +79,11 @@ namespace hatjumper
             }
 
             platform.Draw(spriteBatch);
+        }
+
+        public override void OnAfterDraw(SpriteBatch spriteBatch)
+        {
+            shadow?.Draw(spriteBatch);
         }
 
         public override void Update(float deltaTime)
@@ -85,11 +94,18 @@ namespace hatjumper
             {
                 go.Update(deltaTime*timeKoef);
             }
+            shadow.Update(deltaTime);
         }
 
         public override void Tap()
         {
             base.Tap();
+
+            if (!active)
+            {
+                return;
+            }
+
             if (scene is MainScene)
             {
                 ((MainScene)scene).TeleportCharacterTo(this);
@@ -99,6 +115,18 @@ namespace hatjumper
         public void SetTimeKoef(float koef)
         {
             timeKoef = koef;
+        }
+
+        public void Activate()
+        {
+            active = true;
+            shadow.ShadowOut();
+        }
+
+        public void Deactivate()
+        {
+            active = false;
+            shadow.ShadowIn();
         }
     }
 }

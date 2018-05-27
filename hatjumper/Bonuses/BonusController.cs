@@ -10,6 +10,7 @@
 
         public float moneyBonusTime = 0;
         public float timeBonusTime = 0;
+        public float minusOneBonusTime = 0;
 
         public void MoneyBonusAdd()
         {
@@ -46,6 +47,23 @@
             }
         }
 
+        public void MinusOneBonusAdd()
+        {
+            minusOneBonusTime = 10;
+            if (scene is MainScene)
+            {
+                ((MainScene)scene).DeactivateLocation();
+            }
+        }
+
+        public void MinusOneBonusEnd()
+        {
+            if (scene is MainScene)
+            {
+                ((MainScene)scene).ActivateLocation();
+            }
+        }
+
         public void Update(float deltaTime)
         {
             if (moneyBonusTime > 0)
@@ -65,6 +83,16 @@
                 {
                     timeBonusTime = 0;
                     TimeBonusEnd();
+                }
+            }
+
+            if (minusOneBonusTime > 0)
+            {
+                minusOneBonusTime -= deltaTime;
+                if (minusOneBonusTime <= 0)
+                {
+                    minusOneBonusTime = 0;
+                    MinusOneBonusEnd();
                 }
             }
         }

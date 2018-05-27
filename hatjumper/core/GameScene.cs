@@ -68,7 +68,7 @@ namespace hatjumper
 
         public void Draw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
             OnBeforeDraw(graphics, spriteBatch, gameTime);
             OnDraw(graphics, spriteBatch, gameTime);

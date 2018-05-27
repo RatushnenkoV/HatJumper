@@ -19,6 +19,8 @@ namespace hatjumper
         public static String locationDangersBaseName = "-dangers";
         public static String locationPlatformBaseName = "-platform";
 
+        public int activeCount => GetActiveLocationCount();
+
         public LocationController(Game game, GameScene scene)
         {
             this.game = game;
@@ -60,11 +62,19 @@ namespace hatjumper
         public void Attack(Dangers dangers = null)
         {
             Random r = new Random();
-
+            //С активными возможно че-то надо придумать
             var used = new HashSet<int>();
-            for (int i = 0; i < locations.Count-1; i++)
+            for (int i = 0; i < activeCount-1; i++)
             {
                 int idx = r.Next(locations.Count);
+                if (!locations[idx].active)
+                {
+                    idx++;
+                    if (idx >= locations.Count)
+                    {
+                        idx = 0;
+                    }
+                }
                 if (!used.Contains(idx))
                 {
                     locations[idx].Attack();
@@ -75,7 +85,18 @@ namespace hatjumper
 
         public int GetActiveLocationCount()
         {
-            return locations.Count;
+            // Переделать на краисво
+
+            int activeCount = 0;
+            foreach (var location in locations)
+            {
+                if (location.active)
+                {
+                    activeCount++;
+                }
+            }
+
+            return activeCount;
         }
     }
 }

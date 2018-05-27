@@ -101,5 +101,38 @@ namespace hatjumper
                 location.attackDel = attackDel;
             }
         }
+
+        public void DeactivateLocation()
+        {
+
+            // переделать красиво
+            foreach (var location in locationController.locations)
+            {
+                if (!location.active)
+                {
+                    return;
+                }
+            }
+
+            Random r = new Random();
+            int idx = r.Next(locationController.locations.Count);
+            if (Character.GetInstance().activeLocation == locationController.locations[idx])
+            {
+                idx++;
+                if (idx >= locationController.locations.Count)
+                {
+                    idx = 0;
+                }
+            }
+            locationController.locations[idx].Deactivate();
+        }
+
+        public void ActivateLocation()
+        {
+            foreach (var location in locationController.locations)
+            {
+                location.Activate();
+            }
+        }
     }
 }
