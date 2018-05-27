@@ -134,5 +134,13 @@ namespace hatjumper
                 location.Activate();
             }
         }
+
+        public void DeleteDangers()
+        {
+            foreach (var location in locationController.locations)
+            {
+                location.DeleteDangers();
+            }
+        }
     }
 }

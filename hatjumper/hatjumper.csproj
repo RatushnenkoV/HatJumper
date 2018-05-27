@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity1.cs" />
+    <Compile Include="Bonuses\BonusBomb.cs" />
     <Compile Include="Bonuses\BonusCoins.cs" />
     <Compile Include="Bonuses\BonusController.cs" />
     <Compile Include="Bonuses\Bonus.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="GameObjects\Character.cs" />
     <Compile Include="GameObjects\Dangers.cs" />
     <Compile Include="GameObjects\Cloud.cs" />
+    <Compile Include="GameObjects\LivesCounter.cs" />
     <Compile Include="GameObjects\Poof.cs" />
     <Compile Include="GameObjects\Shadow.cs" />
     <Compile Include="GameObjects\Spark.cs" />

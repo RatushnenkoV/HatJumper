@@ -74,6 +74,9 @@ namespace hatjumper
             if (lives <= 0)
             {
                 Kill();
+            } else
+            {
+                scene.gameObjects.Add(new LivesCounter(new Vector2(position.X + scales.X * 3/4, position.Y - scales.Y/3), scene, lives, scales.Y/3));
             }
         }
 

@@ -42,7 +42,7 @@ namespace hatjumper
         {
             Dangers dangers;
             // исправить
-            if (random.Next(100) < 50)
+            if (random.Next(100) < 10)
             {
                 dangers = Bonus.GetBonus(location.dangersStartPosition, location.dangerScales, location.scene, location.scene.game.screenScales.Y + 100, location);
             }
@@ -127,6 +127,19 @@ namespace hatjumper
         {
             active = false;
             shadow.ShadowIn();
+        }
+
+        public void DeleteDangers()
+        {
+            List<GameObject> copy = new List<GameObject>(gameObjects);
+            foreach (var go in copy)
+            {
+                if (go.GetType() == typeof(Dangers))
+                {
+                    scene.gameObjects.Add(new Poof(go.position, go.scales, scene));
+                    go.Delete();
+                }
+            }
         }
     }
 }

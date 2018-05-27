@@ -57,6 +57,8 @@ namespace hatjumper
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Content.Load<SpriteFont>("gameFont");
+
             activeScene = new Menu();
             activeScene.Load();
         }

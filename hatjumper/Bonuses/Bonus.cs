@@ -29,10 +29,8 @@ namespace hatjumper
 
         public static Bonus GetBonus(Vector2 position, Vector2 scales, GameScene scene, float maxY, Location location)
         {
-            return new BonusMinusOne(position, scales, scene, maxY, location);
-            /*
             Random r = new Random();
-            int k = r.Next(4);
+            int k = r.Next(5);
 
             switch (k)
             {
@@ -40,9 +38,10 @@ namespace hatjumper
                 case 1: return new Money(position, scales, scene, maxY, location);
                 case 2: return new BonusTime(position, scales, scene, maxY, location);
                 case 3: return new BonusHelmet(position, scales, scene, maxY, location);
+                case 4: return new BonusMinusOne(position, scales, scene, maxY, location);
+                case 5: return new BonusBomb(position, scales, scene, maxY, location);
             }
             return null;
-            */
         }
     }
    
