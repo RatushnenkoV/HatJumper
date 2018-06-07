@@ -89,10 +89,14 @@ namespace hatjumper
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-            List<GameObject> gameObjectsCopy = new List<GameObject>(gameObjects);
-            foreach (var go in gameObjectsCopy)
+
+            if (!((MainScene)scene).pause)
             {
-                go.Update(deltaTime*timeKoef);
+                List<GameObject> gameObjectsCopy = new List<GameObject>(gameObjects);
+                foreach (var go in gameObjectsCopy)
+                {
+                    go.Update(deltaTime * timeKoef);
+                }
             }
             shadow.Update(deltaTime);
         }

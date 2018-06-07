@@ -57,7 +57,10 @@ namespace hatjumper
 
         public virtual void OnDraw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, DisplayRectangle, Color.White);
+            if (sprite != null)
+            {
+                spriteBatch.Draw(sprite, DisplayRectangle, Color.White);
+            }
         }
 
         public virtual void OnAfterDraw(SpriteBatch spriteBatch)

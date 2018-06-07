@@ -35,6 +35,7 @@ namespace hatjumper
         public override void OnDraw(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(font, "" + lives, position, Color.White);
+            // Понять почему не работает 
             //spriteBatch.DrawString(font, ""+lives, position, Color.White, 0, new Vector2(0, 0), 100, SpriteEffects.None, 100);
         }
     }

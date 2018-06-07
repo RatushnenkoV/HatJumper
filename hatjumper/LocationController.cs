@@ -36,10 +36,11 @@ namespace hatjumper
             return scene.screenScales;
         }
 
-        public void GenerateLocations(int count)
+        public void GenerateLocations(int count, Vector2 position)
         {
             Random r = new Random();
             var unusedTypes = new List<string>(types);
+            locations.Clear();
             for (int i = 0; i < count; i++)
             {
                 int idx = r.Next(unusedTypes.Count);
@@ -47,7 +48,7 @@ namespace hatjumper
                 unusedTypes.RemoveAt(idx);
 
                 Location location = new Location(
-                        new Vector2(i * screenScales.X / count, 0),
+                        new Vector2(position.X + i * screenScales.X / count, position.Y),
                         new Vector2(screenScales.X / count, screenScales.Y),
                         scene,
                         game.Content.Load<Texture2D>(type + locationBGBaseName),

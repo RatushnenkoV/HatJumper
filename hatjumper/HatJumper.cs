@@ -13,7 +13,7 @@ namespace hatjumper
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        GameScene activeScene;
+        public GameScene activeScene;
 
         public Vector2 screenScales;
 

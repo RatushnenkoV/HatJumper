@@ -19,20 +19,24 @@ namespace hatjumper
 
         public BonusController bonusController;
 
+        public Button btnPause;
+        public bool pause;
+        public Shadow shadow;
+
+        public int score = 0;
+
+
         public MainScene() : base()
         {
             locationController = new LocationController(game, this);
             this.bonusController = new BonusController(this);
         }
 
-        public override void OnBeforeDraw(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, GameTime gameTime)
-        {
-        }
-
         public override void Load()
         {
-            locationController.GenerateLocations(locationCount);
+            locationController.GenerateLocations(locationCount, new Vector2(0, -100));
             gameObjects.AddRange(locationController.locations);
+            pause = false;
 
             if (startLocationIdx >= 0 && startLocationIdx < locationController.locations.Count)
             {
@@ -42,37 +46,68 @@ namespace hatjumper
                 gameObjects.Add(character);
             }
 
+            
+            btnPause = new Button(new Vector2(0, screenScales.Y - 100), new Vector2(100, 100), this, game.Content.Load<Texture2D>("SoundOn"), BtnPauseAction)
+            {
+                spriteGetDel = BtnPauseGetSprite
+            };
+            Score score = new Score(new Vector2(100, screenScales.Y - 100), new Vector2(screenScales.X - 100, 100), this);
+            gameObjects.Add(btnPause);
+            gameObjects.Add(score);
+
             changingScene = new ChangingSceneCloud(this, ChangingState.changingIn);
             gameObjects.Add(changingScene);
+            shadow = new Shadow(new Vector2(0, 0), screenScales, this);
+            gameObjects.Add(shadow);
+        }
+
+        public void Reload()
+        {
+            score = 0;
+            if (startLocationIdx >= 0 && startLocationIdx < locationController.locations.Count)
+            {
+                var character = Character.GetInstance();
+                var location = locationController.locations[startLocationIdx];
+                character.Initialize(new Vector2(location.scales.X, location.scales.Y * 0.15F), this, location);
+                gameObjects.Add(character);
+            }
+            pause = false;
         }
 
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
 
-            sinceLastAttack += deltaTime;
-            if (sinceLastAttack >= timeBetweenAttacks)
+            if (!pause)
             {
-                Attack();
-                sinceLastAttack = 0;
+                sinceLastAttack += deltaTime;
+                if (sinceLastAttack >= timeBetweenAttacks)
+                {
+                    Attack();
+                    sinceLastAttack = 0;
+                }
+                bonusController.Update(deltaTime);
             }
-            bonusController.Update(deltaTime);
         }
 
         void Attack()
         {
+            score++;
             locationController.Attack();
         }
 
         public void TeleportCharacterTo(Location location)
         {
-            Character character = Character.GetInstance();
-            if (character.dead)
+            if (!pause)
             {
-                character.Initialize(new Vector2(location.scales.X, location.scales.Y * 0.15F), this, location);
-                gameObjects.Add(character);
+                Character character = Character.GetInstance();
+                if (character.dead)
+                {
+                    character.Initialize(new Vector2(location.scales.X, location.scales.Y * 0.15F), this, location);
+                    gameObjects.Add(character);
+                }
+                Character.GetInstance().TeleportTo(location);
             }
-            Character.GetInstance().TeleportTo(location);
         }
 
         public override bool CanStartScene()
@@ -140,6 +175,56 @@ namespace hatjumper
             foreach (var location in locationController.locations)
             {
                 location.DeleteDangers();
+            }
+        }
+
+        public static void BtnPauseAction()
+        {
+            if (HJGame.activeGame.activeScene is MainScene)
+            {
+                MainScene scene = (MainScene)HJGame.activeGame.activeScene;
+                if (!scene.pause)
+                {
+                    scene.Pause();
+                } else
+                {
+                    scene.Play();
+                }
+            }
+        }
+
+        public static Texture2D BtnPauseGetSprite()
+        {
+            if (HJGame.activeGame.activeScene is MainScene)
+            {
+                MainScene scene = (MainScene)HJGame.activeGame.activeScene;
+                if (scene.pause)
+                {
+                    return scene.game.Content.Load<Texture2D>("PlayBtn");
+                }
+                else
+                {
+                    return scene.game.Content.Load<Texture2D>("PauseBtn");
+                }
+            }
+            return null;   
+        }
+
+        public void Pause()
+        {
+            pause = true;
+            shadow.ShadowIn();
+        }
+
+        public void Play()
+        {
+            shadow.ShadowOut();
+            if (Character.GetInstance().dead)
+            {
+                Reload();
+            } else 
+            {
+                pause = false;
             }
         }
     }

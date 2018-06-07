@@ -90,6 +90,7 @@
     <Compile Include="GameObjects\Cloud.cs" />
     <Compile Include="GameObjects\LivesCounter.cs" />
     <Compile Include="GameObjects\Poof.cs" />
+    <Compile Include="GameObjects\Score.cs" />
     <Compile Include="GameObjects\Shadow.cs" />
     <Compile Include="GameObjects\Spark.cs" />
     <Compile Include="GlobalVars.cs" />

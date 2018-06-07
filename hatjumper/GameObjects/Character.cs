@@ -88,6 +88,12 @@ namespace hatjumper
             Vector2 poofPos = new Vector2(position.X + scales.X / 2 - poofScales.X / 2, position.Y);
             Poof poof = new Poof(poofPos, poofScales, scene);
             scene.gameObjects.Add(poof);
+
+            if (scene.GetType() == typeof(MainScene))
+            {
+                ((MainScene)scene).Pause();
+            }
+
             Delete();
 
         }
